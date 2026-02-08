@@ -12,7 +12,7 @@
       overflow: hidden;
       color: white;
 
-      /* Fondo romántico pero sobrio */
+      /* Fondo romántico sobrio */
       background: linear-gradient(
         135deg,
         #2b1a1f,
@@ -21,15 +21,11 @@
       );
     }
 
-    /* Capa sutil para dar profundidad */
+    /* Overlay MUY suave */
     .overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(
-        circle at top,
-        rgba(255,255,255,0.05),
-        rgba(0,0,0,0.45)
-      );
+      background: rgba(0, 0, 0, 0.25);
       z-index: 0;
     }
 
@@ -44,21 +40,26 @@
       justify-content: center;
       text-align: center;
       padding: 20px;
-      z-index: 1;
+      z-index: 2;
     }
 
     .scene.active {
       opacity: 1;
     }
 
+    /* VIDEO DE FONDO CORREGIDO */
     video {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.25;
-      z-index: -1;
+
+      /* CLAVE para que no se vea negro */
+      filter: brightness(0.6) contrast(1.1);
+      opacity: 0.6;
+
+      z-index: 1;
     }
 
     img.main {
@@ -67,6 +68,7 @@
       border-radius: 20px;
       box-shadow: 0 0 30px rgba(0,0,0,0.6);
       animation: zoomSlow 20s linear;
+      z-index: 3;
     }
 
     h1 {
@@ -74,10 +76,12 @@
       line-height: 1.4;
       margin-top: 20px;
       animation: fadeUp 2s ease;
+      z-index: 3;
     }
 
     .buttons {
       margin-top: 20px;
+      z-index: 3;
     }
 
     button {
@@ -103,9 +107,10 @@
       margin-top: 20px;
       font-size: 1.3em;
       animation: fadeUp 1s ease;
+      z-index: 3;
     }
 
-    /* Corazón */
+    /* CORAZÓN */
     .heart-container {
       position: relative;
       width: 220px;
@@ -182,7 +187,7 @@
       <source src="song1.mp4" type="video/mp4">
     </video>
 
-    <img src="img1.jpg" class="main" alt="Recuerdo 1">
+    <img src="img1.jpg" class="main">
 
     <h1>
       Lamento mucho lo de tu papi.<br>
@@ -197,7 +202,7 @@
       <source src="song2.mp4" type="video/mp4">
     </video>
 
-    <img src="img2.jpg" class="main" alt="Recuerdo 2">
+    <img src="img2.jpg" class="main">
 
     <h1>¿Quieres ser mi San Valentín? 💖</h1>
 
@@ -210,7 +215,6 @@
   </div>
 
   <script>
-    // Cambio automático de escena
     setTimeout(() => {
       document.getElementById("scene1").classList.remove("active");
       document.getElementById("scene2").classList.add("active");
@@ -226,7 +230,7 @@
         <h1>💘 Sabía que dirías que sí 💘</h1>
         <div class="heart-container">
           <div class="heart">
-            <img src="heart.jpg" alt="Nosotros">
+            <img src="heart.jpg">
           </div>
         </div>
       `;
