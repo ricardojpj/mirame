@@ -8,16 +8,34 @@
   <style>
     body {
       margin: 0;
-      background: black;
       font-family: Arial, sans-serif;
       overflow: hidden;
       color: white;
+
+      /* Fondo romántico pero sobrio */
+      background: linear-gradient(
+        135deg,
+        #2b1a1f,
+        #3a1f2b,
+        #1e1e26
+      );
+    }
+
+    /* Capa sutil para dar profundidad */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle at top,
+        rgba(255,255,255,0.05),
+        rgba(0,0,0,0.45)
+      );
+      z-index: 0;
     }
 
     .scene {
       position: absolute;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       opacity: 0;
       transition: opacity 2s ease-in-out;
       display: flex;
@@ -26,37 +44,115 @@
       justify-content: center;
       text-align: center;
       padding: 20px;
+      z-index: 1;
     }
 
     .scene.active {
       opacity: 1;
-      z-index: 1;
     }
 
-    img {
-      max-width: 85%;
-      max-height: 60%;
+    video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      z-index: -1;
+    }
+
+    img.main {
+      max-width: 80%;
+      max-height: 55%;
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.3);
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
       animation: zoomSlow 20s linear;
     }
 
     h1 {
       font-size: 1.4em;
-      margin-top: 20px;
       line-height: 1.4;
-      animation: fadeUp 3s ease;
+      margin-top: 20px;
+      animation: fadeUp 2s ease;
     }
 
-    video {
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 32px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 30px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .yes {
+      background: #ffffff;
+      color: #8b2d40;
+    }
+
+    .no {
+      background: #8b2d40;
+      color: white;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.3em;
+      animation: fadeUp 1s ease;
+    }
+
+    /* Corazón */
+    .heart-container {
+      position: relative;
+      width: 220px;
+      height: 200px;
+      margin: 25px auto 0;
+    }
+
+    .heart {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
+      background: #c73b5c;
+      transform: rotate(-45deg);
+      animation: pulse 1.5s infinite;
+      border-radius: 20px;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #c73b5c;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -50%;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 50%;
+      top: 0;
+    }
+
+    .heart img {
+      position: absolute;
+      width: 70%;
+      height: 70%;
       object-fit: cover;
-      opacity: 0.35;
-      z-index: -1;
+      border-radius: 15px;
+      top: 15%;
+      left: 15%;
+      transform: rotate(45deg);
+      z-index: 2;
     }
 
     @keyframes zoomSlow {
@@ -68,9 +164,17 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes pulse {
+      0% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.1); }
+      100% { transform: rotate(-45deg) scale(1); }
+    }
   </style>
 </head>
 <body>
+
+  <div class="overlay"></div>
 
   <!-- ESCENA 1 -->
   <div class="scene active" id="scene1">
@@ -78,11 +182,12 @@
       <source src="song1.mp4" type="video/mp4">
     </video>
 
-    <img src="img1.jpg" alt="Recuerdo 1">
+    <img src="img1.jpg" class="main" alt="Recuerdo 1">
+
     <h1>
       Lamento mucho lo de tu papi.<br>
-      Sé que es doloroso y que hay días donde el corazón pesa más de lo normal.<br>
-      Quiero que sepas que estoy contigo y no estás sola 🤍
+      Sé que es doloroso y que hay días en los que el corazón pesa más de lo normal.<br>
+      Quiero que sepas que no estás sola 🤍
     </h1>
   </div>
 
@@ -92,18 +197,40 @@
       <source src="song2.mp4" type="video/mp4">
     </video>
 
-    <img src="img2.jpg" alt="Recuerdo 2">
-    <h1>
-      Con todo mi cariño y respeto…<br><br>
-      ¿Quieres ser mi San Valentín? 💖
-    </h1>
+    <img src="img2.jpg" class="main" alt="Recuerdo 2">
+
+    <h1>¿Quieres ser mi San Valentín? 💖</h1>
+
+    <div class="buttons">
+      <button class="yes" onclick="answerYes()">Sí 💖</button>
+      <button class="no" onclick="answerNo()">No 🙃</button>
+    </div>
+
+    <div id="result"></div>
   </div>
 
   <script>
+    // Cambio automático de escena
     setTimeout(() => {
       document.getElementById("scene1").classList.remove("active");
       document.getElementById("scene2").classList.add("active");
-    }, 20000); // 20 segundos
+    }, 20000);
+
+    function answerNo() {
+      document.getElementById("result").innerHTML =
+        "❌ Escogiste la respuesta incorrecta 😅<br>Inténtalo otra vez 💕";
+    }
+
+    function answerYes() {
+      document.getElementById("result").innerHTML = `
+        <h1>💘 Sabía que dirías que sí 💘</h1>
+        <div class="heart-container">
+          <div class="heart">
+            <img src="heart.jpg" alt="Nosotros">
+          </div>
+        </div>
+      `;
+    }
   </script>
 
 </body>
