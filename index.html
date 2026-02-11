@@ -5,36 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para Ti 🤍</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-
 <style>
-*{
+body{
   margin:0;
-  padding:0;
-  box-sizing:border-box;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+  background:linear-gradient(135deg,#1f1f1f,#2a2a2a);
+  color:white;
 }
 
-body{
-  font-family:'Playfair Display', serif;
-  background: radial-gradient(circle at top, #3b1f2b, #141218);
-  color:white;
-  min-height:100vh;
+.container{
+  max-width:800px;
+  margin:auto;
   padding:20px;
 }
 
-/* Contenedor principal */
-.container{
-  width:100%;
-  max-width:900px;
-  margin:0 auto;
+.section{
+  display:none;
 }
 
-/* Página tipo sección */
-.page{
-  display:none;
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:30px;
-  margin-bottom:30px;
-  box-shadow:0 0 40px rgba(0,0,0,0
+.section.active{
+  display:block;
+}
+
+h1{
+  font-size:22px;
+}
+
+p{
+  font-size:17px;
+  line-height:1.6;
+}
+
+img{
+  width:100%;
+  border-radius:15px;
+  margin:20px 0;
+}
+
+.buttons{
+  text-align:center;
+  margin-top:20px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  margin:8px;
+  cursor:pointer;
+}
+
+.primary{
+  background:white;
+  color:black;
+}
+
+.secondary{
+  background:#7a2e40;
+  color:white;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="section active" id="s1">
+  <h1>Para [SU NOMBRE]</h1>
+  <img src="padre.jpg">
+  <p>
+    Él soñó con verte doctora…  
+    y hoy lo lograste.
+  </p>
+  <div class="buttons">
+    <button class="primary" onclick="next()">Siguiente</button>
+  </div>
+</div>
+
+<div class="section" id="s2">
+  <h1>Tu fuerza</h1>
+  <img src="momento2.jpg">
+  <p>
+    Tu camino no se mide por ciudades,  
+    se mide por el corazón que tienes.
+  </p>
+  <div class="buttons">
+    <button class="primary" onclick="prev()">Atrás</button>
+    <button class="primary" onclick="next()">Siguiente</button>
+  </div>
+</div>
+
+<div class="section" id="s3">
+  <h1>¿Quieres ser mi San Valentín? 💖</h1>
+  <div class="buttons">
+    <button class="primary" onclick="yes()">Sí 🤍</button>
+    <button class="secondary" onclick="no()">No 🙃</button>
+  </div>
+  <div id="result" style="text-align:center;margin-top:20px;"></div>
+  <div class="buttons">
+    <button class="primary" onclick="prev()">Atrás</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+var current=0;
+var sections=document.getElementsByClassName("section");
+
+function show(i){
+  for(var x=0;x<sections.length;x++){
+    sections[x].classList.remove("active");
+  }
+  sections[i].classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function next(){
+  if(current<sections.length-1){
+    current++;
+    show(current);
+  }
+}
+
+function prev(){
+  if(current>0){
+    current--;
+    show(current);
+  }
+}
+
+function no(){
+  document.getElementById("result").innerHTML=
+  "<p>❌ Esa no es la respuesta correcta 🤍</p>";
+}
+
+function yes(){
+  document.getElementById("result").innerHTML=
+  "<p>Sabía que dirías que sí 💘</p>";
+}
+</script>
+
+</body>
+</html>
