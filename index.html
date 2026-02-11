@@ -8,121 +8,100 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 body{
   font-family:'Playfair Display', serif;
-  background: radial-gradient(circle at center, #3b1f2b, #141218);
-  height:100vh;
-  overflow:hidden;
+  background: radial-gradient(circle at top, #3b1f2b, #141218);
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  padding:20px;
   color:white;
-  animation:fadeBody 2s ease forwards;
 }
 
-@keyframes fadeBody{
-  from{opacity:0;}
-  to{opacity:1;}
-}
-
-/* Fondo partículas suaves */
-body::before{
-  content:"";
-  position:fixed;
-  width:200%;
-  height:200%;
-  background:url("https://www.transparenttextures.com/patterns/stardust.png");
-  opacity:0.07;
-  animation:moveBg 90s linear infinite;
-}
-@keyframes moveBg{
-  from{transform:translate(0,0);}
-  to{transform:translate(-600px,-600px);}
-}
-
+/* Contenedor libro */
 .book{
-  width:95%;
-  max-width:750px;
-  height:85vh;
-  backdrop-filter:blur(20px);
+  width:100%;
+  max-width:800px;
   background:rgba(255,255,255,0.06);
-  border-radius:25px;
-  padding:40px;
-  box-shadow:0 0 80px rgba(0,0,0,0.9);
-  position:relative;
-  overflow:hidden;
-  perspective:1200px;
+  backdrop-filter:blur(15px);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 0 60px rgba(0,0,0,0.7);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
+/* Página */
 .page{
-  position:absolute;
-  width:100%;
-  height:100%;
-  opacity:0;
-  transform:rotateY(20deg);
-  transition:all 1s ease;
+  display:none;
+  animation:fadeIn 0.8s ease forwards;
 }
 
 .page.active{
-  opacity:1;
-  transform:rotateY(0deg);
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(15px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 h1{
   margin-bottom:15px;
+  font-size:clamp(1.3rem, 4vw, 1.8rem);
 }
 
 .name{
   font-family:'Great Vibes', cursive;
-  font-size:2em;
-  color:#f8c6d8;
-  animation:pulseName 2s infinite;
-}
-@keyframes pulseName{
-  0%{opacity:0.7;}
-  50%{opacity:1;}
-  100%{opacity:0.7;}
+  font-size:clamp(1.8rem, 6vw, 2.5rem);
+  color:#f6c1d6;
 }
 
 p{
-  line-height:1.7;
   margin-top:15px;
-  opacity:0;
-  animation:fadeText 2s forwards;
-  animation-delay:1s;
+  line-height:1.6;
+  font-size:clamp(0.95rem, 2.5vw, 1.05rem);
 }
-@keyframes fadeText{to{opacity:1;}}
 
 img{
   width:100%;
+  max-height:300px;
+  object-fit:cover;
   border-radius:15px;
-  margin:20px 0;
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
+  margin:15px 0;
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
 
-.nav-container{
-  position:absolute;
-  bottom:20px;
-  width:100%;
+/* Botones */
+.buttons{
+  margin-top:20px;
   text-align:center;
 }
 
 button{
-  padding:10px 30px;
+  padding:10px 25px;
   margin:8px;
-  border-radius:30px;
   border:none;
+  border-radius:25px;
   cursor:pointer;
-  transition:0.3s;
   font-family:'Playfair Display';
+  font-size:0.9rem;
+  transition:0.3s;
 }
 
 .nav{
   background:white;
   color:#7a2e40;
 }
+
 .nav:hover{
   background:#7a2e40;
   color:white;
@@ -133,35 +112,36 @@ button{
   color:white;
 }
 
-.countdown{
-  margin-top:15px;
-  font-size:0.9em;
-  opacity:0.8;
+.result{
+  margin-top:20px;
+  text-align:center;
 }
 
-/* Corazón final */
 .heart-container{
-  position:relative;
-  display:inline-block;
-  margin-top:30px;
+  margin-top:20px;
+  animation:pulse 1.5s infinite;
 }
 
-.heart{
-  position:absolute;
-  top:-20px;
-  left:-20px;
-  width:290px;
-  animation:pulse 1.5s infinite;
-  z-index:1;
-}
 @keyframes pulse{
   0%{transform:scale(1);}
-  50%{transform:scale(1.08);}
+  50%{transform:scale(1.05);}
   100%{transform:scale(1);}
 }
 
-.result{
-  margin-top:20px;
+.countdown{
+  margin-top:10px;
+  font-size:0.9rem;
+  opacity:0.8;
+}
+
+/* Responsive ajuste */
+@media (max-width:480px){
+  .book{
+    padding:20px;
+  }
+  img{
+    max-height:220px;
+  }
 }
 </style>
 </head>
@@ -177,7 +157,7 @@ button{
     Hoy honramos a tu papá.  
     Él soñó con verte doctora…  
     y hoy eres exactamente eso.  
-    Estoy seguro de que donde esté, sonríe orgulloso.
+    Estoy seguro que donde esté, sonríe orgulloso.
   </p>
 </div>
 
@@ -196,18 +176,20 @@ button{
 <!-- Página 3 -->
 <div class="page">
   <h1>Una última pregunta…</h1>
-  <p style="font-family:'Great Vibes'; font-size:2em;">
+  <p style="font-family:'Great Vibes'; font-size:clamp(1.5rem, 6vw, 2rem);">
     ¿Quieres ser mi San Valentín? 💖
   </p>
 
-  <button class="nav" onclick="yes()">Sí 🤍</button>
-  <button class="no" onclick="no()">No 🙃</button>
+  <div class="buttons">
+    <button class="nav" onclick="yes()">Sí 🤍</button>
+    <button class="no" onclick="no()">No 🙃</button>
+  </div>
 
   <div class="countdown" id="countdown"></div>
   <div class="result" id="result"></div>
 </div>
 
-<div class="nav-container">
+<div class="buttons">
   <button class="nav" onclick="prev()">Atrás</button>
   <button class="nav" onclick="next()">Siguiente</button>
 </div>
@@ -220,32 +202,10 @@ button{
 <script>
 const pages=document.querySelectorAll(".page");
 let current=0;
-const m1=document.getElementById("music1");
-const m2=document.getElementById("music2");
-
-function fadeInAudio(audio){
-  audio.volume=0;
-  audio.play();
-  let vol=0;
-  let fade=setInterval(()=>{
-    if(vol<1){
-      vol+=0.05;
-      audio.volume=vol;
-    }else clearInterval(fade);
-  },200);
-}
 
 function showPage(i){
   pages.forEach(p=>p.classList.remove("active"));
   pages[i].classList.add("active");
-
-  if(i===0){
-    m2.pause();
-    fadeInAudio(m1);
-  }else{
-    m1.pause();
-    fadeInAudio(m2);
-  }
 }
 
 function next(){
@@ -254,6 +214,7 @@ function next(){
     showPage(current);
   }
 }
+
 function prev(){
   if(current>0){
     current--;
@@ -269,23 +230,18 @@ function no(){
 function yes(){
   document.getElementById("result").innerHTML=
   `<div class="heart-container">
-     <svg class="heart" viewBox="0 0 32 29.6">
-       <path fill="#c73b5c" d="M23.6,0c-3.4,0-6.3,2.7-7.6,4.9C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4
-       c0,9.4,16,21.2,16,21.2s16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-     </svg>
-     <img src="final.jpg" width="250">
-   </div>
-   <p style="font-family:'Great Vibes'; font-size:1.8em;">
-   Sabía que dirías que sí 💘
-   </p>`;
+      <img src="final.jpg" width="200">
+    </div>
+    <p style="font-family:'Great Vibes'; font-size:1.6rem;">
+    Sabía que dirías que sí 💘
+    </p>`;
 }
 
-/* Cuenta regresiva a 14 Feb */
+/* Cuenta regresiva */
 function updateCountdown(){
   const target=new Date("February 14, 2026 00:00:00");
   const now=new Date();
   const diff=target-now;
-
   const days=Math.floor(diff/(1000*60*60*24));
   document.getElementById("countdown").innerText=
   "Faltan "+days+" días para San Valentín 🤍";
