@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ti mi AMOR 🤍</title>
+<title>Para tiii mi amor 🤍</title>
 
 <!-- 🔥 Anti Cache -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<!-- Fuente Moderna -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -20,7 +21,7 @@
 }
 
 body{
-  font-family:'Playfair Display', serif;
+  font-family:'Poppins', sans-serif;
   background: radial-gradient(circle at top, #3b1f2b, #141218);
   min-height:100vh;
   display:flex;
@@ -30,7 +31,6 @@ body{
   color:white;
 }
 
-/* CONTENEDOR LIBRO */
 .book{
   width:100%;
   max-width:800px;
@@ -44,7 +44,6 @@ body{
   justify-content:space-between;
 }
 
-/* PÁGINAS */
 .page{
   display:none;
   animation:fadeIn 0.8s ease forwards;
@@ -61,14 +60,9 @@ body{
 
 h1{
   margin-bottom:15px;
-  font-size:clamp(1.3rem, 4vw, 1.8rem);
+  font-size:clamp(1.4rem, 4vw, 2rem);
   text-align:center;
-}
-
-.name{
-  font-family:'Great Vibes', cursive;
-  font-size:clamp(1.8rem, 6vw, 2.5rem);
-  color:#f6c1d6;
+  font-weight:600;
 }
 
 p{
@@ -76,13 +70,13 @@ p{
   line-height:1.6;
   font-size:clamp(0.95rem, 2.5vw, 1.05rem);
   text-align:center;
+  font-weight:300;
 }
 
-/* 🔥 IMÁGENES GENERALES */
 img{
   display:block;
   margin:25px auto;
-  width:80%;
+  width:85%;
   max-width:350px;
   border-radius:18px;
   box-shadow:0 0 35px rgba(0,0,0,0.7);
@@ -93,21 +87,18 @@ img:hover{
   transform:scale(1.03);
 }
 
-/* Fotos páginas 1 y 2 */
 .book img{
   max-height:280px;
   object-fit:cover;
 }
 
-/* 🔥 Imagen final SIN recorte */
 .final-img{
-  width:220px;
+  width:230px;
   max-height:none;
   object-fit:contain;
   box-shadow:0 0 40px rgba(255,192,203,0.4);
 }
 
-/* BOTONES */
 .buttons{
   margin-top:25px;
   text-align:center;
@@ -119,7 +110,7 @@ button{
   border:none;
   border-radius:25px;
   cursor:pointer;
-  font-family:'Playfair Display';
+  font-family:'Poppins';
   font-size:0.9rem;
   transition:0.3s;
 }
@@ -162,7 +153,6 @@ button{
   text-align:center;
 }
 
-/* Responsive */
 @media (max-width:480px){
   .book{
     padding:20px;
@@ -179,8 +169,8 @@ button{
 
 <!-- PÁGINA 1 -->
 <div class="page active">
-  <h1>Para tiii GORDITA 🤍</h1>
-  <img src="padre.jpg?v=2">
+  <h1>Para tiii mi amor 🤍</h1>
+  <img src="padre.jpg?v=4">
   <p>
     Hoy honramos a tu papá.  
     Él soñó con verte doctora…  
@@ -192,7 +182,7 @@ button{
 <!-- PÁGINA 2 -->
 <div class="page">
   <h1>Tu camino</h1>
-  <img src="momento2.jpg?v=2">
+  <img src="momento2.jpg?v=4">
   <p>
     Aunque no hayas ido a Barcelona,  
     tu grandeza no depende de una ciudad.  
@@ -204,7 +194,7 @@ button{
 <!-- PÁGINA 3 -->
 <div class="page">
   <h1>Una última pregunta…</h1>
-  <p style="font-family:'Great Vibes'; font-size:clamp(1.5rem, 6vw, 2rem);">
+  <p style="font-size:1.4rem; font-weight:600;">
     ¿Quieres ser mi San Valentín? 💖
   </p>
 
@@ -225,59 +215,80 @@ button{
 </div>
 
 <!-- Música -->
-<audio id="music1" src="music1.mp3" loop></audio>
-<audio id="music2" src="music2.mp3" loop></audio>
+<audio id="music1" src="music1.mp3?v=4" loop></audio>
+<audio id="music2" src="music2.mp3?v=4" loop></audio>
 
 <script>
-const pages=document.querySelectorAll(".page");
-let current=0;
+const pages = document.querySelectorAll(".page");
+let current = 0;
+
+const music1 = document.getElementById("music1");
+const music2 = document.getElementById("music2");
+
+let musicStarted = false;
+
+// 🔥 Inicia música al primer toque
+function startMusic(){
+  if(!musicStarted){
+    music1.play().catch(()=>{});
+    musicStarted = true;
+  }
+}
+document.body.addEventListener("click", startMusic);
 
 function showPage(i){
   pages.forEach(p=>p.classList.remove("active"));
   pages[i].classList.add("active");
   window.scrollTo(0,0);
+
+  if(i === 2){
+    music1.pause();
+    music2.play().catch(()=>{});
+  } else {
+    music2.pause();
+    music1.play().catch(()=>{});
+  }
 }
 
 function next(){
-  if(current<pages.length-1){
+  if(current < pages.length-1){
     current++;
     showPage(current);
   }
 }
 
 function prev(){
-  if(current>0){
+  if(current > 0){
     current--;
     showPage(current);
   }
 }
 
 function no(){
-  document.getElementById("result").innerHTML=
+  document.getElementById("result").innerHTML =
   "❌ Esa no es la respuesta correcta… tu corazón sabe cuál es 🤍";
 }
 
 function yes(){
-  document.getElementById("result").innerHTML=
+  document.getElementById("result").innerHTML =
   `<div class="heart-container">
-      <img src="final.jpg?v=2" class="final-img">
+      <img src="final.jpg?v=4" class="final-img">
     </div>
-    <p style="font-family:'Great Vibes'; font-size:1.6rem;">
+    <p style="font-size:1.4rem; font-weight:600;">
     Sabía que dirías que sí 💘
     </p>`;
 }
 
-/* Cuenta regresiva */
 function updateCountdown(){
-  const target=new Date("February 14, 2026 00:00:00");
-  const now=new Date();
-  const diff=target-now;
-  const days=Math.floor(diff/(1000*60*60*24));
-  document.getElementById("countdown").innerText=
-  "Faltan "+days+" días para San Valentín 🤍";
+  const target = new Date("February 14, 2026 00:00:00");
+  const now = new Date();
+  const diff = target - now;
+  const days = Math.floor(diff/(1000*60*60*24));
+  document.getElementById("countdown").innerText =
+  "Faltan " + days + " días para San Valentín 🤍";
 }
-updateCountdown();
 
+updateCountdown();
 showPage(0);
 </script>
 
