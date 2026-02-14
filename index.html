@@ -216,14 +216,12 @@ button{
 
 <!-- Música -->
 <audio id="music1" src="music1.mp3?v=4" loop></audio>
-<audio id="music2" src="music2.mp3?v=4" loop></audio>
 
 <script>
 const pages = document.querySelectorAll(".page");
 let current = 0;
 
 const music1 = document.getElementById("music1");
-const music2 = document.getElementById("music2");
 
 let musicStarted = false;
 
@@ -241,13 +239,9 @@ function showPage(i){
   pages[i].classList.add("active");
   window.scrollTo(0,0);
 
-  if(i === 2){
-    music1.pause();
-    music2.play().catch(()=>{});
-  } else {
-    music2.pause();
-    music1.play().catch(()=>{});
-  }
+  
+  music1.play().catch(()=>{});
+  
 }
 
 function next(){
