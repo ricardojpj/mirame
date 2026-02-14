@@ -5,20 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para tiii mi amor 🤍</title>
 
-<!-- 🔥 Anti Cache -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
-<!-- Fuente Moderna -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   font-family:'Poppins', sans-serif;
@@ -49,9 +43,7 @@ body{
   animation:fadeIn 0.8s ease forwards;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block;}
 
 @keyframes fadeIn{
   from{opacity:0; transform:translateY(15px);}
@@ -67,8 +59,8 @@ h1{
 
 p{
   margin-top:15px;
-  line-height:1.6;
-  font-size:clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height:1.7;
+  font-size:clamp(1rem, 2.5vw, 1.1rem);
   text-align:center;
   font-weight:300;
 }
@@ -80,21 +72,10 @@ img{
   max-width:350px;
   border-radius:18px;
   box-shadow:0 0 35px rgba(0,0,0,0.7);
-  transition:transform 0.4s ease;
-}
-
-img:hover{
-  transform:scale(1.03);
-}
-
-.book img{
-  max-height:280px;
-  object-fit:cover;
 }
 
 .final-img{
   width:230px;
-  max-height:none;
   object-fit:contain;
   box-shadow:0 0 40px rgba(255,192,203,0.4);
 }
@@ -115,62 +96,62 @@ button{
   transition:0.3s;
 }
 
-.nav{
-  background:white;
-  color:#7a2e40;
-}
+.nav{background:white;color:#7a2e40;}
+.nav:hover{background:#7a2e40;color:white;}
+.no{background:#7a2e40;color:white;}
 
-.nav:hover{
-  background:#7a2e40;
-  color:white;
-}
+.result{text-align:center;margin-top:20px;}
+.countdown{text-align:center;margin-top:10px;font-size:0.9rem;opacity:0.8;}
 
-.no{
-  background:#7a2e40;
-  color:white;
-}
-
-.result{
-  margin-top:20px;
-  text-align:center;
-}
-
-.heart-container{
-  margin-top:20px;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.05);}
-  100%{transform:scale(1);}
-}
-
-.countdown{
-  margin-top:10px;
-  font-size:0.9rem;
-  opacity:0.8;
-  text-align:center;
-}
-
-@media (max-width:480px){
-  .book{
-    padding:20px;
-  }
-  .book img{
-    max-height:220px;
-  }
+#startScreen{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:#141218;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+color:white;
+cursor:pointer;
+text-align:center;
+padding:20px;
 }
 </style>
 </head>
 <body>
 
+<!-- Pantalla inicial -->
+<div id="startScreen">
+  <h1>💖 Toca para comenzar 💖</h1>
+</div>
+
 <div class="book">
 
-<!-- PÁGINA 1 -->
+<!-- PÁGINA 0 (PREÁMBULO NUEVO) -->
 <div class="page active">
+  <h1>Antes de empezar… 🤍</h1>
+  <p>
+    Quiero que sepas algo muy importante…  
+    Te quiero muchísimo.  
+  </p>
+  <p>
+    No quiero que te sientas mal por nada.  
+    Lo poco que vas a ver aquí lo pensé yo solo,  
+    con calma, con cariño,  
+    pensando únicamente en ti.
+  </p>
+  <p>
+    No busco impresionarte…  
+    solo quiero verte feliz. 🤍
+  </p>
+</div>
+
+<!-- PÁGINA 1 -->
+<div class="page">
   <h1>Para tiii mi amor 🤍</h1>
-  <img src="padre.jpg?v=4">
+  <img src="padre.jpg">
   <p>
     Hoy honramos a tu papá.  
     Él soñó con verte doctora…  
@@ -182,7 +163,7 @@ button{
 <!-- PÁGINA 2 -->
 <div class="page">
   <h1>Tu camino</h1>
-  <img src="momento2.jpg?v=4">
+  <img src="momento2.jpg">
   <p>
     Aunque no hayas ido a Barcelona,  
     tu grandeza no depende de una ciudad.  
@@ -194,7 +175,7 @@ button{
 <!-- PÁGINA 3 -->
 <div class="page">
   <h1>Una última pregunta…</h1>
-  <p style="font-size:1.4rem; font-weight:600;">
+  <p style="font-size:1.4rem;font-weight:600;">
     ¿Quieres ser mi San Valentín? 💖
   </p>
 
@@ -214,34 +195,30 @@ button{
 
 </div>
 
-<!-- Música -->
-<audio id="music1" src="music1.mp3?v=4" loop></audio>
+<audio id="music1" loop>
+  <source src="music1.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const pages = document.querySelectorAll(".page");
 let current = 0;
 
 const music1 = document.getElementById("music1");
+const startScreen = document.getElementById("startScreen");
 
-let musicStarted = false;
-
-// 🔥 Inicia música al primer toque
-function startMusic(){
-  if(!musicStarted){
-    music1.play().catch(()=>{});
-    musicStarted = true;
-  }
+function startExperience(){
+  music1.volume = 1;
+  music1.play().then(()=>{
+    startScreen.style.display = "none";
+  });
 }
-document.body.addEventListener("click", startMusic);
+
+startScreen.addEventListener("click", startExperience);
 
 function showPage(i){
   pages.forEach(p=>p.classList.remove("active"));
   pages[i].classList.add("active");
   window.scrollTo(0,0);
-
-  
-  music1.play().catch(()=>{});
-  
 }
 
 function next(){
@@ -265,10 +242,10 @@ function no(){
 
 function yes(){
   document.getElementById("result").innerHTML =
-  `<div class="heart-container">
-      <img src="final.jpg?v=4" class="final-img">
+  `<div style="margin-top:20px;">
+      <img src="final.jpg" class="final-img">
     </div>
-    <p style="font-size:1.4rem; font-weight:600;">
+    <p style="font-size:1.4rem;font-weight:600;">
     Sabía que dirías que sí 💘
     </p>`;
 }
@@ -278,13 +255,4 @@ function updateCountdown(){
   const now = new Date();
   const diff = target - now;
   const days = Math.floor(diff/(1000*60*60*24));
-  document.getElementById("countdown").innerText =
-  "Faltan " + days + " días para San Valentín 🤍";
-}
-
-updateCountdown();
-showPage(0);
-</script>
-
-</body>
-</html>
+  document.getElementById("countdown")
